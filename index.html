@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>feria — Accounting built for agents.</title>
+  <meta name="description" content="feria — a double-entry ledger built for autonomous agents. Append-only, attributed, hash-linked and reversible.">
+
+  <meta property="og:title" content="feria — Accounting built for agents.">
+  <meta property="og:description" content="A double-entry ledger built for autonomous agents, not month-end spreadsheets.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="stage">
+    <div class="stage__glow" aria-hidden="true"></div>
+
+    <!-- Drifting ledger columns (decorative) — populated by feria.js -->
+    <div class="drift" id="drift" aria-hidden="true"></div>
+
+    <div class="center">
+      <h1 class="wordmark">feria</h1>
+      <p class="tagline">Accounting built for agents.</p>
+
+      <div class="join">
+        <form class="join__box" id="join-form" data-state="input" novalidate>
+          <span class="join__prompt" aria-hidden="true">&gt;</span>
+          <input
+            class="join__input"
+            id="join-email"
+            type="email"
+            name="email"
+            placeholder="you@company.com"
+            aria-label="Email address"
+            autocomplete="email"
+            spellcheck="false">
+          <span class="join__hint" id="join-hint" aria-hidden="true">&#8629; enter</span>
+        </form>
+
+        <div class="join__done" id="join-done" role="status" hidden>
+          <div class="join__echo">&gt; join <span id="join-echo"></span></div>
+          <div class="join__ok">&#10003; you&rsquo;re on the list<span class="join__cursor" aria-hidden="true"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span>&copy; 2026 feria</span>
+    </footer>
+  </main>
+
+  <script src="./feria.js"></script>
+</body>
+</html>
