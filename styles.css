@@ -37,6 +37,8 @@ a:hover { color: var(--accent-link-hover); }
 @keyframes fx-drift { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 @keyframes fx-blink { 0%, 48% { opacity: 1; } 52%, 100% { opacity: 0; } }
 @keyframes fx-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fx-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes fx-dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
 
 /* ---- Stage -------------------------------------------------------------- */
 
@@ -193,6 +195,40 @@ a:hover { color: var(--accent-link-hover); }
   gap: 8px;
   color: var(--accent);
 }
+
+/* Skeleton placeholder shown while the waitlist request is in flight, so the
+   network hang has feedback instead of a frozen, disabled input. */
+.join__skeleton {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+.join__bar {
+  width: 150px;
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--line) 0%,
+    var(--ink-mono) 50%,
+    var(--line) 100%
+  );
+  background-size: 200% 100%;
+  animation: fx-shimmer 1.25s ease-in-out infinite;
+}
+.join__sending {
+  font: 400 11px "IBM Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: var(--ink-mono);
+}
+.join__dots::after {
+  content: "";
+  animation: fx-dots 1.2s steps(1, end) infinite;
+}
+
+/* loading: show the skeleton, hide the final confirmation. */
+.join__done[data-state="loading"] .join__skeleton { display: flex; }
+.join__done[data-state="loading"] .join__ok { display: none; }
 .join__cursor {
   width: 1px;
   height: 12px;
@@ -222,7 +258,9 @@ a:hover { color: var(--accent-link-hover); }
   .wordmark,
   .tagline,
   .join,
-  .join__cursor {
+  .join__cursor,
+  .join__bar,
+  .join__dots::after {
     animation: none;
   }
 }

@@ -163,20 +163,32 @@
 
       submitting = true;
       input.disabled = true;
+
+      // Swap to the confirmation panel immediately in a loading/skeleton state
+      // so the (often slow) network round-trip has visible feedback instead of
+      // a frozen, disabled input.
+      echo.textContent = email;
+      form.hidden = true;
+      done.hidden = false;
+      done.dataset.state = "loading";
+
       const stored = await submitEmail(email);
       submitting = false;
 
       if (!stored) {
-        // Let the visitor retry rather than silently losing their email.
+        // Roll back to the form so the visitor can retry rather than silently
+        // losing their email.
+        done.hidden = true;
+        delete done.dataset.state;
+        form.hidden = false;
         input.disabled = false;
         form.dataset.state = "error";
         input.focus();
         return;
       }
 
-      echo.textContent = email;
-      form.hidden = true;
-      done.hidden = false;
+      // Reveal the real confirmation now that the email is stored.
+      done.dataset.state = "ready";
     };
 
     // Clear the error state as soon as the visitor edits the field again.

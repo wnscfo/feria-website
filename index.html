@@ -41,8 +41,12 @@
           <span class="join__hint" id="join-hint" aria-hidden="true">&#8629; enter</span>
         </form>
 
-        <div class="join__done" id="join-done" role="status" hidden>
+        <div class="join__done" id="join-done" role="status" aria-live="polite" hidden>
           <div class="join__echo">&gt; join <span id="join-echo"></span></div>
+          <div class="join__skeleton" aria-hidden="true">
+            <span class="join__bar"></span>
+            <span class="join__sending">sending<span class="join__dots"></span></span>
+          </div>
           <div class="join__ok">&#10003; you&rsquo;re on the list<span class="join__cursor" aria-hidden="true"></span></div>
         </div>
       </div>
