@@ -1,6 +1,5 @@
 /* feria — teaser landing page
-   Ported from the "Feria Teaser Drift FINAL" design prototype.
-   Dark, monospace ledger aesthetic with three drifting log columns. */
+   Dark, monospace aesthetic over an animated ASCII energy field (canvas). */
 
 :root {
   color-scheme: dark;
@@ -34,7 +33,6 @@ a:hover { color: var(--accent-link-hover); }
 [hidden] { display: none !important; }
 ::selection { background: oklch(0.34 0.06 170); }
 
-@keyframes fx-drift { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 @keyframes fx-blink { 0%, 48% { opacity: 1; } 52%, 100% { opacity: 0; } }
 @keyframes fx-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fx-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
@@ -58,47 +56,32 @@ a:hover { color: var(--accent-link-hover); }
   background: radial-gradient(90% 60% at 50% 0%, #111418 0%, #0a0b0d 62%);
 }
 
-/* ---- Drifting ledger columns ------------------------------------------- */
+/* ---- ASCII energy field (canvas) --------------------------------------- */
 
-.drift {
+/* Full-viewport grid of monospace glyphs whose character, colour and glow
+   track a drifting energy blob. Rendered by ascii-field.js. */
+.field {
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  opacity: 0.5;
-  -webkit-mask-image: radial-gradient(115% 88% at 50% 50%, transparent 26%, rgba(0, 0, 0, 0.55) 52%, #000 100%);
-  mask-image: radial-gradient(115% 88% at 50% 50%, transparent 26%, rgba(0, 0, 0, 0.55) 52%, #000 100%);
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
-.drift__col {
-  position: relative;
-  overflow: hidden;
-  padding: 0 22px;
-}
-
-.drift__track {
+/* Vignette that keeps the centred wordmark and form legible over the field
+   without washing out the glow. */
+.stage__veil {
   position: absolute;
-  top: 0;
-  left: 22px;
-  right: 22px;
-  animation: fx-drift var(--dur, 46s) linear infinite;
-  will-change: transform;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 42% at 50% 50%,
+      rgba(10, 11, 13, 0.9) 0%,
+      rgba(10, 11, 13, 0.82) 34%,
+      rgba(10, 11, 13, 0.42) 62%,
+      transparent 84%),
+    linear-gradient(to bottom, transparent 60%, rgba(10, 11, 13, 0.5) 100%);
 }
-
-.drift__line {
-  height: 26px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font: 400 11px "IBM Plex Mono", monospace;
-  color: var(--ink-mono);
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.drift__dot { width: 5px; height: 5px; flex: none; }
-.drift__text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.drift__code { flex: none; color: var(--ink-faint); }
 
 /* ---- Center content ----------------------------------------------------- */
 
@@ -117,6 +100,7 @@ a:hover { color: var(--accent-link-hover); }
   margin: 0;
   font: 400 clamp(46px, 7.4vw, 88px)/1 "Helvetica Neue", Helvetica, sans-serif;
   letter-spacing: -0.042em;
+  text-shadow: 0 2px 40px rgba(10, 11, 13, 0.9), 0 0 12px rgba(10, 11, 13, 0.7);
   animation: fx-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
@@ -125,6 +109,7 @@ a:hover { color: var(--accent-link-hover); }
   max-width: 20em;
   font: 400 17px/1.5 "Helvetica Neue", Helvetica, sans-serif;
   color: var(--ink-soft);
+  text-shadow: 0 1px 24px rgba(10, 11, 13, 0.95);
   animation: fx-rise 0.7s 0.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
@@ -254,7 +239,6 @@ a:hover { color: var(--accent-link-hover); }
 /* ---- Reduced motion ----------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .drift__track,
   .wordmark,
   .tagline,
   .join,
