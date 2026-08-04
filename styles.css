@@ -20,10 +20,17 @@
 html, body {
   margin: 0;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   background: var(--bg);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-wrap: pretty;
+  /* Keep mobile browsers from "boosting" text on rotate, which would resize
+     the layout under the fixed one-screen stage. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 a { color: var(--accent-link); text-decoration: none; }
@@ -40,10 +47,14 @@ a:hover { color: var(--accent-link-hover); }
 
 /* ---- Stage -------------------------------------------------------------- */
 
+/* `svh` (not `dvh`) so the stage keeps one fixed height on mobile: it stays
+   put when the URL bar collapses or the keyboard opens, instead of resizing
+   and re-laying out the ASCII field mid-interaction. */
 .stage {
   position: relative;
   width: 100%;
-  height: 100dvh;
+  height: 100vh;
+  height: 100svh;
   min-height: 640px;
   overflow: hidden;
   background: var(--bg);
@@ -133,6 +144,9 @@ a:hover { color: var(--accent-link-hover); }
   border: 1px solid var(--line);
   background: var(--panel);
   transition: border-color 0.3s ease;
+  max-width: 100%;
+  /* No double-tap-to-zoom delay or gesture on the form. */
+  touch-action: manipulation;
 }
 
 /* Invalid email or a failed submit — nudge the border without shouting. */
@@ -234,6 +248,40 @@ a:hover { color: var(--accent-link-hover); }
   gap: 16px;
   font: 400 10.5px "IBM Plex Mono", monospace;
   color: var(--ink-faint);
+}
+
+/* ---- Touch / mobile ----------------------------------------------------- */
+
+/* iOS Safari zooms the page whenever a focused field computes to less than
+   16px, so on touch devices the input (and the sizes tied to it) go up to 16px
+   rather than the 12.5px used on pointer devices. Nothing else is scaled. */
+@media (pointer: coarse) {
+  .join { width: 100%; }
+
+  /* Fluid box so the larger type still fits a 320px screen. */
+  .join__box { width: min(100%, 340px); }
+
+  .join__input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .join__prompt,
+  .join__done {
+    font-size: 16px;
+  }
+
+  .join__hint { white-space: nowrap; }
+  .join__cursor { height: 15px; }
+}
+
+/* Short viewports (landscape phones) must not exceed the stage height, or the
+   fixed, overflow-hidden body would clip the form. */
+@media (max-height: 640px) {
+  .stage { min-height: 0; }
+  .join { margin-top: 20px; }
 }
 
 /* ---- Reduced motion ----------------------------------------------------- */
