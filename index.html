@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-visual">
-  <title>feria — Accounting built for agents.</title>
-  <meta name="description" content="feria — a double-entry ledger built for autonomous agents. Append-only, attributed, hash-linked and reversible.">
+  <title>feria — Accounting that runs itself.</title>
+  <meta name="description" content="Feria is agent-based accounting that keeps your books current, explains every decision, and only asks when judgment is needed.">
 
-  <meta property="og:title" content="feria — Accounting built for agents.">
-  <meta property="og:description" content="A double-entry ledger built for autonomous agents, not month-end spreadsheets.">
+  <meta property="og:title" content="feria — Accounting that runs itself.">
+  <meta property="og:description" content="So good, you never have to open the app.">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,44 +16,155 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <main class="stage">
-    <div class="stage__glow" aria-hidden="true"></div>
+  <header class="nav" aria-label="Primary navigation">
+    <a class="nav__brand" href="#top" aria-label="Feria home">feria<span class="nav__signal"></span></a>
+    <nav class="nav__links" aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#controls">Controls</a>
+      <a class="nav__cta" href="#join">Get early access <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
 
-    <!-- Decorative ASCII energy field + drifting API-call ledger,
-         rendered by ascii-field.js (data in ledger-data.js) -->
-    <canvas class="field" id="field" aria-hidden="true"></canvas>
-    <div class="stage__veil" aria-hidden="true"></div>
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <canvas class="field" id="field" aria-hidden="true"></canvas>
+      <div class="hero__veil" aria-hidden="true"></div>
 
-    <div class="center">
-      <h1 class="wordmark">feria</h1>
-      <p class="tagline">Accounting built for agents.</p>
+      <div class="hero__content">
+        <p class="eyebrow"><span class="eyebrow__dot"></span> Agent-based accounting</p>
+        <h1>So good, you never<br>have to open the app.</h1>
+        <p class="hero__lede">Feria gives every transaction an agent, every decision a trail, and your team the rarest thing in finance: nothing to catch up on.</p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="#join">Get early access <span aria-hidden="true">↗</span></a>
+          <a class="button button--quiet" href="#how">See how it works <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <div class="hero__status" aria-label="Feria system status">
+        <div><span class="status-light"></span> Books current</div>
+        <div><span class="status-label">last close</span> 4 min ago</div>
+        <div><span class="status-label">human actions</span> 0</div>
+      </div>
+    </section>
+
+    <section class="statement section" aria-labelledby="statement-title">
+      <div class="section__label">01 / The premise</div>
+      <div class="statement__copy">
+        <h2 id="statement-title">Your company never stops.<br>Your accounting shouldn’t either.</h2>
+        <p>Traditional software waits for someone to log in, click through a queue, and make the books resemble reality. Feria is already there—listening, reasoning, and closing as your business moves.</p>
+      </div>
+      <div class="statement__aside" aria-hidden="true">
+        <span>always on</span><i></i><span>always attributable</span><i></i><span>always reversible</span>
+      </div>
+    </section>
+
+    <section class="workflow section" id="how" aria-labelledby="workflow-title">
+      <div class="section__label">02 / A continuous close</div>
+      <div class="section__intro">
+        <h2 id="workflow-title">The books keep themselves.</h2>
+        <p>A coordinated team of agents does the repetitive work end to end. They escalate judgment, not chores.</p>
+      </div>
+
+      <div class="agent-grid">
+        <article class="agent-card">
+          <div class="agent-card__top"><span>01</span><span class="agent-state"><i></i> watching</span></div>
+          <div class="agent-card__glyph" aria-hidden="true">⌁</div>
+          <h3>Observe</h3>
+          <p>Agents watch banks, cards, payroll, invoices, and your operational systems as events happen.</p>
+          <div class="agent-card__log"><span>source</span><b>mercury / stripe / rippling</b></div>
+        </article>
+        <article class="agent-card agent-card--active">
+          <div class="agent-card__top"><span>02</span><span class="agent-state"><i></i> reasoning</span></div>
+          <div class="agent-card__glyph" aria-hidden="true">∴</div>
+          <h3>Understand</h3>
+          <p>Context is gathered, policy is applied, and uncertainty is measured before anything touches the ledger.</p>
+          <div class="agent-card__log"><span>confidence</span><b>99.4%</b></div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card__top"><span>03</span><span class="agent-state"><i></i> posting</span></div>
+          <div class="agent-card__glyph" aria-hidden="true">↳</div>
+          <h3>Act</h3>
+          <p>Entries are posted, reconciled, and documented—with a complete chain of evidence behind them.</p>
+          <div class="agent-card__log"><span>ledger</span><b>balanced / verified</b></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="handoff section" aria-labelledby="handoff-title">
+      <div class="section__label">03 / Ambient by design</div>
+      <div class="handoff__layout">
+        <div class="handoff__copy">
+          <h2 id="handoff-title">You don’t use Feria.<br>Your systems do.</h2>
+          <p>Feria works in the background and meets your team where they already are. No new dashboard to tend. No queue quietly aging in another tab.</p>
+          <ul class="check-list">
+            <li><span>01</span>Connect the tools your business runs on</li>
+            <li><span>02</span>Teach Feria your policies and materiality</li>
+            <li><span>03</span>Get a ping only when your judgment matters</li>
+          </ul>
+        </div>
+
+        <div class="event-window" aria-label="An example Feria agent run">
+          <div class="event-window__bar">
+            <span class="window-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>agent_run / exp_8f21</span>
+            <span>00:01.84</span>
+          </div>
+          <div class="event-window__body">
+            <div class="event-row"><time>09:41:02</time><span class="event-icon">↳</span><p>New card transaction from <b>Ramp</b></p><span class="event-status">received</span></div>
+            <div class="event-row"><time>09:41:02</time><span class="event-icon">⌁</span><p>Matched receipt in <b>Gmail</b></p><span class="event-status">linked</span></div>
+            <div class="event-row"><time>09:41:03</time><span class="event-icon">∴</span><p>Applied meals &amp; travel policy</p><span class="event-status">99.4%</span></div>
+            <div class="event-row"><time>09:41:03</time><span class="event-icon">≡</span><p>Posted <b>Dr. Meals / Cr. Card</b></p><span class="event-status">balanced</span></div>
+            <div class="event-row event-row--final"><time>09:41:04</time><span class="event-icon">✓</span><p>Reconciled. No action needed.</p><span class="event-status">done</span></div>
+          </div>
+          <div class="event-window__footer"><span><i></i> continuous close running</span><span>hash 0x7f…e91a</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls section" id="controls" aria-labelledby="controls-title">
+      <div class="section__label">04 / Trust, engineered</div>
+      <div class="section__intro section__intro--wide">
+        <h2 id="controls-title">Autonomous doesn’t mean unaccountable.</h2>
+        <p>Every agent action is constrained by policy and designed for review—even if you never need to review it.</p>
+      </div>
+
+      <div class="control-list">
+        <article><span class="control-list__number">01</span><h3>Attributed</h3><p>Know which agent acted, what evidence it used, and why it reached its conclusion.</p><span class="control-list__mark" aria-hidden="true">◎</span></article>
+        <article><span class="control-list__number">02</span><h3>Double-entry</h3><p>Every movement balances. The ledger remains the source of truth, not a model’s memory.</p><span class="control-list__mark" aria-hidden="true">⇄</span></article>
+        <article><span class="control-list__number">03</span><h3>Hash-linked</h3><p>Each event is chained to the last, giving you a tamper-evident history of the books.</p><span class="control-list__mark" aria-hidden="true">⌘</span></article>
+        <article><span class="control-list__number">04</span><h3>Reversible</h3><p>Agents never erase history. Corrections are explicit, linked, and cleanly unwound.</p><span class="control-list__mark" aria-hidden="true">↶</span></article>
+      </div>
+    </section>
+
+    <section class="close" id="join" aria-labelledby="close-title">
+      <div class="close__noise" aria-hidden="true"></div>
+      <p class="eyebrow"><span class="eyebrow__dot"></span> Private beta</p>
+      <h2 id="close-title">Close the books.<br>Without opening them.</h2>
+      <p>We’re building Feria with a small group of ambitious finance teams.</p>
 
       <div class="join">
         <form class="join__box" id="join-form" data-state="input" novalidate>
           <span class="join__prompt" aria-hidden="true">&gt;</span>
-          <input
-            class="join__input"
-            id="join-email"
-            type="email"
-            name="email"
-            placeholder="you@company.com"
-            aria-label="Email address"
-            autocomplete="email"
-            spellcheck="false">
-          <span class="join__hint" id="join-hint" aria-hidden="true">&#8629; enter</span>
+          <input class="join__input" id="join-email" type="email" name="email" placeholder="you@company.com" aria-label="Work email address" autocomplete="email" spellcheck="false">
+          <button class="join__button" type="submit">Request access <span aria-hidden="true">↗</span></button>
         </form>
 
         <div class="join__done" id="join-done" role="status" aria-live="polite" hidden>
           <div class="join__echo">&gt; join <span id="join-echo"></span></div>
-          <div class="join__skeleton" aria-hidden="true">
-            <span class="join__bar"></span>
-            <span class="join__sending">sending<span class="join__dots"></span></span>
-          </div>
-          <div class="join__ok">&#10003; you&rsquo;re on the list<span class="join__cursor" aria-hidden="true"></span></div>
+          <div class="join__skeleton" aria-hidden="true"><span class="join__bar"></span><span class="join__sending">sending<span class="join__dots"></span></span></div>
+          <div class="join__ok">✓ you’re on the list<span class="join__cursor" aria-hidden="true"></span></div>
         </div>
       </div>
-    </div>
+      <p class="close__note">No newsletter. Just a note when we’re ready for you.</p>
+    </section>
   </main>
+
+  <footer class="footer">
+    <a class="footer__brand" href="#top">feria</a>
+    <p>Accounting built for agents.</p>
+    <p class="footer__right">© 2026 Feria, Inc. <span>New York / Everywhere</span></p>
+  </footer>
 
   <script src="./ledger-data.js"></script>
   <script src="./ascii-field.js"></script>
