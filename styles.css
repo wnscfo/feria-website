@@ -56,16 +56,38 @@ button, input { font: inherit; }
 .nav__cta { padding: 10px 14px; border: 1px solid var(--line-light); border-radius: 6px; color: var(--ink) !important; background: rgba(17,19,22,.65); }
 .nav__cta span { color: var(--accent); }
 
-.hero { position: relative; min-height: 760px; height: 100svh; overflow: hidden; display: grid; place-items: center; background: var(--bg); }
+/* Hero + the app card the code buries — one pinned scene. .hero is tall to
+   supply the scroll distance; .hero__pin holds a single screen (copy + card +
+   status) pinned to the viewport while the foreground ledger rises. The extra
+   height below the first screen IS the scroll over which --rise goes 0 → 1. */
+.hero { position: relative; height: 200vh; background: var(--bg); }
+.hero__pin { position: sticky; top: 0; height: 100svh; min-height: 600px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(4px, 1.6vh, 22px); background: var(--bg); }
 .hero__glow { position: absolute; inset: 0; background: radial-gradient(90% 65% at 50% 0%, #12161a 0%, var(--bg) 66%); }
-.field { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: .9; }
-.hero__veil { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(54% 48% at 50% 46%, rgba(10,11,13,.95) 0%, rgba(10,11,13,.82) 37%, rgba(10,11,13,.36) 72%, transparent 100%), linear-gradient(to bottom, rgba(10,11,13,.15), transparent 68%, var(--bg) 100%); }
-.hero__content { position: relative; z-index: 2; width: min(960px, calc(100% - 48px)); padding: 100px 0 84px; text-align: center; }
-.eyebrow { margin: 0 0 28px; display: inline-flex; align-items: center; gap: 10px; font: 500 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .15em; color: var(--ink-soft); }
+/* Shared canvas base (positioning/size). No standalone opacity — nothing is
+   painted on first load; only .field--fore is present and it stays at
+   opacity 0 until scroll. */
+.field { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* The API-call ledger stream. It starts hidden below the fold and, as --rise
+   goes 0 → 1 (set on .hero by hero-scroll.js), rises up and reveals from the
+   floor via a bottom-anchored mask, floating the live tokens into view. */
+.field--fore {
+  z-index: 4;
+  opacity: var(--rise, 0);
+  pointer-events: none;
+  transform: translate3d(0, calc((1 - var(--rise, 0)) * 20%), 0);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 calc(var(--rise, 0) * 62%), transparent 100%);
+          mask-image: linear-gradient(to top, #000 0%, #000 calc(var(--rise, 0) * 62%), transparent 100%);
+  will-change: opacity, transform;
+}
+.hero__veil { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(72% 62% at 50% 42%, rgba(10,11,13,.9) 0%, rgba(10,11,13,.66) 42%, rgba(10,11,13,.24) 76%, transparent 100%), linear-gradient(to bottom, rgba(10,11,13,.2), transparent 62%, var(--bg) 100%); }
+/* Copy stays above the rising foreground stream (z:4) so the headline never
+   gets washed out; only the card below sinks under the code. */
+.hero__content { position: relative; z-index: 5; width: min(760px, calc(100% - var(--page-pad) * 2)); text-align: center; }
+.eyebrow { margin: 0 0 26px; display: inline-flex; align-items: center; gap: 10px; font: 500 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .15em; color: var(--ink-soft); }
 .eyebrow__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: fx-pulse 2.5s ease-in-out infinite; }
-.hero h1 { margin: 0; font: 400 clamp(54px, 7.4vw, 112px)/.91 var(--sans); letter-spacing: -.06em; text-shadow: 0 3px 50px rgba(0,0,0,.9); animation: fx-rise .8s cubic-bezier(.2,.7,.2,1) both; }
-.hero__lede { max-width: 590px; margin: 32px auto 0; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.55; letter-spacing: -.015em; color: var(--ink-soft); animation: fx-rise .8s .08s cubic-bezier(.2,.7,.2,1) both; }
-.hero__actions { margin-top: 38px; display: flex; justify-content: center; gap: 10px; animation: fx-rise .8s .16s cubic-bezier(.2,.7,.2,1) both; }
+.hero h1 { margin: 0; font: 400 clamp(38px, 4.9vw, 68px)/.96 var(--sans); letter-spacing: -.055em; text-shadow: 0 3px 50px rgba(0,0,0,.9); animation: fx-rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.hero__lede { max-width: 480px; margin: 22px auto 0; font-size: clamp(14px, 1.15vw, 17px); line-height: 1.5; letter-spacing: -.015em; color: var(--ink-soft); animation: fx-rise .8s .08s cubic-bezier(.2,.7,.2,1) both; }
+.hero__actions { margin-top: 26px; display: flex; justify-content: center; gap: 10px; animation: fx-rise .8s .16s cubic-bezier(.2,.7,.2,1) both; }
 .button { min-height: 46px; padding: 0 19px; display: inline-flex; align-items: center; justify-content: center; gap: 16px; border-radius: 7px; font: 500 11px var(--mono); transition: border-color .2s ease, background .2s ease, transform .2s ease; }
 .button:hover { transform: translateY(-2px); }
 .button--primary { background: var(--ink); color: var(--bg); border: 1px solid var(--ink); }
@@ -171,6 +193,16 @@ button, input { font: inherit; }
 .footer__right { display: flex; gap: 32px; }
 
 @media (max-width: 900px) {
+  /* The scroll-to-reveal scene is a desktop delight; on narrow screens the hero
+     is a normal section with no rising ledger. */
+  .hero { height: auto; }
+  .hero__pin { position: static; height: auto; min-height: 0; overflow: visible; justify-content: flex-start; gap: 0; padding: 104px var(--page-pad) 60px; }
+  .hero__content { width: min(620px, 100%); padding: 0; }
+  .hero__status { position: static; margin-top: 56px; left: 0; right: 0; padding: 0; }
+  /* No scroll-to-rise on narrow screens — the ledger stream never appears. */
+  .field--fore { display: none; }
+  .hero__veil { background: radial-gradient(90% 55% at 50% 30%, rgba(10,11,13,.9) 0%, rgba(10,11,13,.6) 46%, transparent 88%), linear-gradient(to bottom, rgba(10,11,13,.2), transparent 55%, var(--bg) 100%); }
+
   .section { padding-top: 100px; padding-bottom: 100px; }
   .section__intro, .section__intro--wide { grid-template-columns: 1fr; align-items: start; gap: 28px; }
   .statement { grid-template-columns: 1fr; }
@@ -191,8 +223,7 @@ button, input { font: inherit; }
   .nav { height: 70px; }
   .nav__links > a:not(.nav__cta) { display: none; }
   .nav__cta { padding: 9px 11px; }
-  .hero { min-height: 700px; }
-  .hero__content { padding-top: 100px; }
+  .hero__pin { padding-top: 84px; }
   .hero h1 br { display: none; }
   .hero__lede { max-width: 410px; }
   .hero__actions { flex-direction: column; align-items: stretch; max-width: 330px; margin-left: auto; margin-right: auto; }
@@ -221,4 +252,9 @@ button, input { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  /* No scroll-to-close, so don't pin the laptop into a tall dead-scroll scene. */
+  .hero { height: auto; }
+  .field--fore { display: none; }
+  .hero__pin { position: static; height: auto; min-height: 0; overflow: visible; justify-content: flex-start; gap: 0; padding: 104px var(--page-pad) 60px; }
+  .hero__status { position: static; margin-top: 56px; left: 0; right: 0; padding: 0; }
 }
