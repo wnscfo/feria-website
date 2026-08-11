@@ -26,25 +26,36 @@
   </header>
 
   <main>
+    <!-- Hero. On first load it's just the copy — no ledger behind it. The tall
+         .hero supplies the scroll distance; .hero__pin stays pinned while the
+         API-call ledger rises into view from the floor as you scroll
+         (hero-scroll.js drives --rise). Desktop only; on narrow screens the
+         hero is a normal static block with no rising ledger. -->
     <section class="hero" id="top">
-      <div class="hero__glow" aria-hidden="true"></div>
-      <canvas class="field" id="field" aria-hidden="true"></canvas>
-      <div class="hero__veil" aria-hidden="true"></div>
+      <div class="hero__pin">
+        <div class="hero__glow" aria-hidden="true"></div>
+        <div class="hero__veil" aria-hidden="true"></div>
 
-      <div class="hero__content">
-        <p class="eyebrow"><span class="eyebrow__dot"></span> Accounting for Agents</p>
-        <h1>So good, you never<br>have to open the app.</h1>
-        <p class="hero__lede">Feria gives every transaction an agent, every decision a trail, and your team the rarest thing in finance: nothing to catch up on.</p>
-        <div class="hero__actions">
-          <a class="button button--primary" href="#join">Get early access <span aria-hidden="true">↗</span></a>
-          <a class="button button--quiet" href="#how">See how it works <span aria-hidden="true">↓</span></a>
+        <div class="hero__content">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Accounting for Agents</p>
+          <h1>So good, you never <br>have to open the app.</h1>
+          <p class="hero__lede">Feria gives every transaction an agent, every decision a trail, and your team the rarest thing in finance: nothing to catch up on.</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#join">Get early access <span aria-hidden="true">↗</span></a>
+            <a class="button button--quiet" href="#how">See how it works <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
-      </div>
 
-      <div class="hero__status" aria-label="Feria system status">
-        <div><span class="status-light"></span> Books current</div>
-        <div><span class="status-label">last close</span> 4 min ago</div>
-        <div><span class="status-label">human actions</span> 0</div>
+        <div class="hero__status" aria-label="Feria system status">
+          <div><span class="status-light"></span> Books current</div>
+          <div><span class="status-label">last close</span> 4 min ago</div>
+          <div><span class="status-label">human actions</span> 0</div>
+        </div>
+
+        <!-- The API-call ledger. Hidden on first load; driven by scroll
+             (--rise) it rises up from the floor and floats into view — the work
+             that keeps flowing whether or not you ever open the app. -->
+        <canvas class="field field--fore" id="field-fore" aria-hidden="true"></canvas>
       </div>
     </section>
 
@@ -168,6 +179,7 @@
 
   <script src="./ledger-data.js"></script>
   <script src="./ascii-field.js"></script>
+  <script src="./hero-scroll.js"></script>
   <script src="./feria.js"></script>
 </body>
 </html>
