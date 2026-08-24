@@ -94,10 +94,6 @@ button, input { font: inherit; }
 .button--primary span { color: #157d63; }
 .button--quiet { color: var(--ink-soft); border: 1px solid var(--line); background: rgba(17,19,22,.75); }
 .button--quiet:hover { border-color: var(--line-light); color: var(--ink); }
-.hero__status { position: absolute; z-index: 2; bottom: 0; left: var(--page-pad); right: var(--page-pad); min-height: 58px; display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: clamp(24px, 5vw, 80px); border-top: 1px solid var(--line); color: var(--ink-mono); font: 400 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; }
-.hero__status > div { display: flex; align-items: center; gap: 9px; }
-.status-light { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 9px var(--accent); }
-.status-label { color: var(--ink-faint); }
 
 .section { width: min(var(--max), 100%); margin: 0 auto; padding: 130px var(--page-pad); border-bottom: 1px solid var(--line); }
 .section__label { margin-bottom: 72px; font: 400 10px var(--mono); color: var(--ink-faint); text-transform: uppercase; letter-spacing: .12em; }
@@ -198,7 +194,6 @@ button, input { font: inherit; }
   .hero { height: auto; }
   .hero__pin { position: static; height: auto; min-height: 0; overflow: visible; justify-content: flex-start; gap: 0; padding: 104px var(--page-pad) 60px; }
   .hero__content { width: min(620px, 100%); padding: 0; }
-  .hero__status { position: static; margin-top: 56px; left: 0; right: 0; padding: 0; }
   /* No scroll-to-rise on narrow screens — the ledger stream never appears. */
   .field--fore { display: none; }
   .hero__veil { background: radial-gradient(90% 55% at 50% 30%, rgba(10,11,13,.9) 0%, rgba(10,11,13,.6) 46%, transparent 88%), linear-gradient(to bottom, rgba(10,11,13,.2), transparent 55%, var(--bg) 100%); }
@@ -227,8 +222,6 @@ button, input { font: inherit; }
   .hero h1 br { display: none; }
   .hero__lede { max-width: 410px; }
   .hero__actions { flex-direction: column; align-items: stretch; max-width: 330px; margin-left: auto; margin-right: auto; }
-  .hero__status { grid-template-columns: 1fr auto; }
-  .hero__status > div:nth-child(2) { display: none; }
   .section__label { margin-bottom: 48px; }
   .statement__aside { align-items: flex-start; flex-direction: column; gap: 10px; }
   .statement__aside i { width: 38px; flex: none; }
@@ -256,5 +249,4 @@ button, input { font: inherit; }
   .hero { height: auto; }
   .field--fore { display: none; }
   .hero__pin { position: static; height: auto; min-height: 0; overflow: visible; justify-content: flex-start; gap: 0; padding: 104px var(--page-pad) 60px; }
-  .hero__status { position: static; margin-top: 56px; left: 0; right: 0; padding: 0; }
 }
